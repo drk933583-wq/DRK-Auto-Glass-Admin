@@ -2,7 +2,7 @@
   "name": "DR. KHALED | Admin",
   "short_name": "KHALED Admin",
   "description": "لوحة تحكم DR. KHALED لإدارة الطلبات والكتالوج",
-  "start_url": "../login.html",
+  "start_url": "../index.html",
   "scope": "../",
   "display": "standalone",
   "background_color": "#06122A",
