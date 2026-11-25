@@ -1,27 +1,18 @@
-
 {
-  "id": "./",
-  "name": "DR. KHALED Admin",
-  "short_name": "DRK Admin",
-  "description": "DR. KHALED Administration System",
-  "start_url": "./login.html",
-  "scope": "./",
+  "name": "DR. KHALED | Admin",
+  "short_name": "KHALED Admin",
+  "description": "لوحة تحكم DR. KHALED لإدارة الطلبات والكتالوج",
+  "start_url": "../index.html",
+  "scope": "../",
   "display": "standalone",
-  "orientation": "any",
-  "background_color": "#101D32",
-  "theme_color": "#101D32",
+  "background_color": "#06122A",
+  "theme_color": "#06122A",
+  "lang": "ar",
+  "dir": "rtl",
   "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    }
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
