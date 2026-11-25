@@ -1,18 +1,15 @@
+(function () {
+  if (!('serviceWorker' in navigator)) return;
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", async () => {
-    try {
-      const registration = await navigator.serviceWorker.register(
-        "./admin-service-worker.js",
-        { scope: "./" }
-      );
+  var me = document.currentScript || document.querySelector('script[src$="pwa/register.js"]');
+  if (!me || !me.src) return;
 
-      console.log(
-        "DR. KHALED Admin PWA registered:",
-        registration.scope
-      );
-    } catch (error) {
-      console.error("Admin PWA registration failed:", error);
-    }
+  var swUrl = new URL('../service-worker.js', me.src).href;
+  var scope = new URL('../', me.src).href;
+
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register(swUrl, { scope: scope })
+      .then(function (reg) { reg.update(); })
+      .catch(function (err) { console.warn('Admin PWA service worker not registered:', err); });
   });
-}
+})();
