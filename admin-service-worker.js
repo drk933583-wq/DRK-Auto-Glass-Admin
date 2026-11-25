@@ -1,85 +1,41 @@
+const CACHE_PREFIX = 'drkhaled-admin-';
+const VERSION = 'v1';                       
+const CACHE = CACHE_PREFIX + VERSION;
 
-const CACHE_NAME = "drk-admin-pwa-v2";
+const SCOPE_PATH = new URL('./', self.location).pathname;
+const STATIC_FILE = /\.(?:css|js|png|jpe?g|svg|webp|ico|woff2?)$/i;
 
-const APP_URL = new URL(
-  "./",
-  self.registration.scope
-).href;
+self.addEventListener('install', () => { self.skipWaiting(); });
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(async (cache) => {
-      await cache.add(
-        new Request(APP_URL, { cache: "reload" })
-      );
-    })
-  );
-
-  self.skipWaiting();
+self.addEventListener('activate', event => {
+  event.waitUntil((async () => {
+    const names = await caches.keys();
+    await Promise.all(names.filter(n => n.startsWith(CACHE_PREFIX) && n !== CACHE).map(n => caches.delete(n)));
+    await self.clients.claim();
+  })());
 });
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then(async (keys) => {
-      await Promise.all(
-        keys
-          .filter(
-            (key) =>
-              key.startsWith("drk-admin-pwa-") &&
-              key !== CACHE_NAME
-          )
-          .map((key) => caches.delete(key))
-      );
-
-      await self.clients.claim();
-    })
-  );
+self.addEventListener('fetch', event => {
+  const req = event.request;
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+  if (!url.pathname.startsWith(SCOPE_PATH)) return;
+  if (req.mode === 'navigate') return;
+  if (!STATIC_FILE.test(url.pathname)) return;
+  if (url.pathname === SCOPE_PATH + 'service-worker.js') return;
+  event.respondWith(networkFirst(req));
 });
 
-self.addEventListener("fetch", (event) => {
-  const request = event.request;
-  const url = new URL(request.url);
-
-  if (
-    request.method !== "GET" ||
-    url.origin !== self.location.origin ||
-    request.mode !== "navigate"
-  ) {
-    return;
+async function networkFirst(req) {
+  const cache = await caches.open(CACHE);
+  try {
+    const res = await fetch(req);
+    if (res.ok && res.type === 'basic') cache.put(req, res.clone()).catch(() => {});
+    return res;
+  } catch (err) {
+    const saved = await cache.match(req);
+    if (saved) return saved;
+    throw err;
   }
-
-  if (!url.href.startsWith(APP_URL)) {
-    return;
-  }
-
-  event.respondWith(
-    fetch(request)
-      .then(async (response) => {
-        if (response.ok) {
-          const cache = await caches.open(CACHE_NAME);
-          await cache.put(request, response.clone());
-        }
-
-        return response;
-      })
-      .catch(async () => {
-        const cached = await caches.match(request);
-
-        if (cached) return cached;
-
-        const fallback = await caches.match(APP_URL);
-
-        if (fallback) return fallback;
-
-        return new Response(
-          "DR. KHALED Admin is currently offline.",
-          {
-            status: 503,
-            headers: {
-              "Content-Type": "text/plain; charset=utf-8"
-            }
-          }
-        );
-      })
-  );
-});
+}
