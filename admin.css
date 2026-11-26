@@ -100,13 +100,13 @@ body:has(.login){min-height:100vh;display:grid;place-items:center;padding:1rem;b
 }
 
 .sidebar-brand .admin-logo {
-    width: 58px;
-    height: 58px;
-    flex: 0 0 58px;
+    width: 70px;
+    height: 70px;
+    flex: 0 0 70px;
     object-fit: cover;
     border-radius: 50%;
     clip-path: circle(50%);
-    animation: adminLogoSpin 10s linear infinite;
+    animation: adminLogoSpin 8s linear infinite;
 }
 
 .sidebar-brand h1 {
@@ -125,9 +125,9 @@ body:has(.login){min-height:100vh;display:grid;place-items:center;padding:1rem;b
 
 @media (max-width: 768px) {
     .sidebar-brand .admin-logo {
-        width: 48px;
-        height: 48px;
-        flex-basis: 48px;
+        width: 55px;
+        height: 55px;
+        flex-basis: 55px;
     }
 
     .sidebar-brand {
