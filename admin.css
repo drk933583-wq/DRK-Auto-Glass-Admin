@@ -99,7 +99,7 @@ body:has(.login){min-height:100vh;display:grid;place-items:center;padding:1rem;b
     clip-path: circle(50%);
     margin: 0 auto 14px;
     flex: 0 0 auto;
-    animation: adminLogoSpin 40s linear infinite;
+    animation: adminLogoSpin 10s linear infinite;
 }
 
 /* Tablet */
