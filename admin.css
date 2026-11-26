@@ -87,59 +87,57 @@ body:has(.login){min-height:100vh;display:grid;place-items:center;padding:1rem;b
 #msg{min-height:1.4em;margin-top:.8rem;text-align:center}
 /* ---------- Admin Logo ---------- */
 
-.sidebar nav .admin-logo {
-    width: 104px;
-    height: 104px;
-    max-width: 100%;
-    aspect-ratio: 1 / 1;
+/* Sidebar Brand Header */
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 8px 4px 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.sidebar-brand .admin-logo {
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
     object-fit: cover;
-    object-position: center;
-    display: block;
     border-radius: 50%;
     clip-path: circle(50%);
-    margin: 0 auto 14px;
-    flex: 0 0 auto;
-    animation: adminLogoSpin 10s linear infinite;
+    animation: adminLogoSpin 40s linear infinite;
 }
 
-/* Tablet */
-@media (max-width: 900px) {
-    .sidebar nav .admin-logo {
-        width: 76px;
-        height: 76px;
-    }
+.sidebar-brand h1 {
+    font-size: 1.15rem;
+    color: #fff;
+    letter-spacing: .04em;
+    padding: 0;
+    white-space: nowrap;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-    .sidebar nav .admin-logo {
-        width: 68px;
-        height: 68px;
-        margin-bottom: 10px;
-    }
-}
-
-/* Small Mobile */
-@media (max-width: 400px) {
-    .sidebar nav .admin-logo {
-        width: 60px;
-        height: 60px;
-    }
-}
-
-/* Logo Animation */
 @keyframes adminLogoSpin {
-    from {
-        transform: rotate(0deg);
-    }
     to {
         transform: rotate(360deg);
     }
 }
 
-/* Accessibility */
+@media (max-width: 768px) {
+    .sidebar-brand .admin-logo {
+        width: 48px;
+        height: 48px;
+        flex-basis: 48px;
+    }
+
+    .sidebar-brand {
+        gap: 9px;
+        padding-bottom: 14px;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .sidebar nav .admin-logo {
+    .sidebar-brand .admin-logo {
         animation: none;
     }
 }
